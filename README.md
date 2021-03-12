@@ -1,0 +1,1 @@
+# commercetools-custom-application-aws-starter
