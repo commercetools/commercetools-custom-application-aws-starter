@@ -76,7 +76,7 @@ resource "aws_lambda_function" "edge_headers" {
   role             = aws_iam_role.lambda_service_role.arn
   handler          = "lambda-edge-headers.handler"
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
-  runtime          = "nodejs10.x"
+  runtime          = "nodejs14.x"
   publish          = true
   provider         = aws.us_east_1
 
