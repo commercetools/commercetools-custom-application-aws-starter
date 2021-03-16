@@ -76,7 +76,7 @@ resource "aws_lambda_function" "edge_headers" {
   role             = aws_iam_role.lambda_service_role.arn
   handler          = "lambda-edge-headers.handler"
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
-  runtime          = "nodejs14.x"
+  runtime          = "nodejs12.x"
   publish          = true
   provider         = aws.us_east_1
 
@@ -141,6 +141,14 @@ resource "aws_cloudfront_distribution" "web_distribution" {
     min_ttl                = 0
     default_ttl            = 3600
     max_ttl                = 86400
+
+    forwarded_values {
+      query_string = true
+      cookies {
+        forward = "none"
+      }
+      headers = ["Origin"]
+    }
 
     lambda_function_association {
       event_type   = "origin-response"
